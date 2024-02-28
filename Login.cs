@@ -1,0 +1,79 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Data.OleDb;
+using System.Data.SqlClient;
+
+namespace To_Do_List
+{
+    public partial class Login : Form
+    {
+        public Login()
+        {
+            InitializeComponent();
+        }
+
+        private void guna2CirclePictureBox1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+            SqlConnection con = new SqlConnection();
+            con.ConnectionString = "data source = (localdb)\\MSSQLLocalDB;Initial Catalog=todo_list; integrated security=True ";
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+
+            cmd.CommandText = "select * from users where username = '" + textBoxUsername.Text + "' and password = '" + textBoxPass.Text + "'";
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+
+
+            if (ds.Tables[0].Rows.Count != 0)
+            {
+                new dashbord().Show();
+                this.Hide();
+            }
+            else
+            {
+                MessageBox.Show("Username and Password does not match, Enter correct Username and Password", "Login Faild", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                textBoxUsername.Text = "";
+                textBoxPass.Text = "";
+                textBoxUsername.Focus();
+            }
+        }
+
+        private void btnClr_Click(object sender, EventArgs e)
+        {
+            textBoxUsername.Text = "";
+            textBoxPass.Text = "";
+            textBoxUsername.Focus();
+        }
+
+        private void bunifuLabel5_Click(object sender, EventArgs e)
+        {
+            new registration().Show();
+            this.Hide();
+        }
+
+        private void guna2CheckBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (guna2CheckBox1.Checked)
+            {
+                textBoxPass.PasswordChar = '\0';
+            }
+            else
+            {
+                textBoxPass.PasswordChar = '*';
+            }
+        }
+    }
+}

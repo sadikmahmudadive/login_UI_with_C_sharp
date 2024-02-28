@@ -1,0 +1,7 @@
+echo "# beautiful_login_page_ui_with_dotNate_and_visualC_sharp" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/sadikmahmudadive/beautiful_login_page_ui_with_dotNate_and_visualC_sharp.git
+git push -u origin main
